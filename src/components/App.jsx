@@ -5,21 +5,37 @@ class App extends React.Component {
       videoList: this.props.videos,
       currentVideo: this.props.videos[0]
     };
+    // this.changeVideo = this.changeVideo.bind(this);
+    // this.searchVideos = this.searchVideos.bind(this);
+  }
+  
+  changeVideo(index) {
+    this.setState({currentVideo: this.state.videoList[index]});
+  }
+  
+  searchVideos(options) {
+    searchYouTube(options, function(data) {
+      console.log('2', this);
+      this.setState({
+        videoList: data.items,
+        currentVideo: data.items[0]
+      });
+    });
   }
   render() {
     return (
       <div>
         <nav className="navbar">
           <div className="col-md-6 offset-md-3">
-            <Search state={this.state}/>
+            <Search searchVideos={this.searchVideos} />
           </div>
         </nav>
         <div className="row">
           <div className="col-md-7">
-            <VideoPlayer video={this.state.currentVideo} state={this.state} />
+            <VideoPlayer video={this.state.currentVideo} />
           </div>
           <div className="col-md-5">
-            <VideoList videos={this.state.videoList} state={this.state} />
+            <VideoList state={this.state} changeVideo={this.changeVideo}/>
           </div>
         </div>
       </div>
