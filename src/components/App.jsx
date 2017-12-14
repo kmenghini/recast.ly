@@ -1,12 +1,29 @@
 class App extends React.Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    console.log(8);
+    super();
     this.state = {
-      videoList: this.props.videos,
-      currentVideo: this.props.videos[0]
+      videoList: [],
+      currentVideo: {
+        id: {
+          videoId: ''
+        },
+        snippet: {
+          title: '',
+          description: '',
+        }
+      }
     };
     this.changeVideo = this.changeVideo.bind(this);
     this.searchVideos = this.searchVideos.bind(this);
+  }
+
+  componentDidMount() {
+    this.searchVideos({
+      key: window.YOUTUBE_API_KEY,
+      query: 'hackreactor',
+      max: 5
+    });
   }
   
   changeVideo(index) {
@@ -15,7 +32,6 @@ class App extends React.Component {
   
   searchVideos(options) {
     searchYouTube(options, function(data) {
-      console.log('6', this);
       this.setState({
         videoList: data.items,
         currentVideo: data.items[0]
@@ -32,7 +48,7 @@ class App extends React.Component {
         </nav>
         <div className="row">
           <div className="col-md-7">
-            <VideoPlayer video={this.state.currentVideo} />
+            <VideoPlayer state={this.state} />
           </div>
           <div className="col-md-5">
             <VideoList state={this.state} changeVideo={this.changeVideo}/>
