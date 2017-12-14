@@ -5,8 +5,8 @@ class App extends React.Component {
       videoList: this.props.videos,
       currentVideo: this.props.videos[0]
     };
-    // this.changeVideo = this.changeVideo.bind(this);
-    // this.searchVideos = this.searchVideos.bind(this);
+    this.changeVideo = this.changeVideo.bind(this);
+    this.searchVideos = this.searchVideos.bind(this);
   }
   
   changeVideo(index) {
@@ -15,12 +15,12 @@ class App extends React.Component {
   
   searchVideos(options) {
     searchYouTube(options, function(data) {
-      console.log('2', this);
+      console.log('6', this);
       this.setState({
         videoList: data.items,
         currentVideo: data.items[0]
       });
-    });
+    }.bind(this));
   }
   render() {
     return (
