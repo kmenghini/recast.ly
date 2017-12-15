@@ -1,16 +1,21 @@
 class App extends React.Component {
   constructor() {
-    console.log(8);
+    console.log(7);
     super();
     this.state = {
       videoList: [],
       currentVideo: {
-        id: {
-          videoId: ''
-        },
+        id: '',
         snippet: {
+          publishedAt: '',
           title: '',
           description: '',
+          channelTitle: '',
+        },
+        statistics: {
+          viewCount: '',
+          likeCount: '',
+          dislikeCount: '',
         }
       }
     };
@@ -27,17 +32,32 @@ class App extends React.Component {
   }
   
   changeVideo(index) {
-    this.setState({currentVideo: this.state.videoList[index]});
+    searchYouTubeStats({
+      key: window.YOUTUBE_API_KEY,
+      id: this.state.videoList[index].id.videoId
+    }, function(videoStats) {
+      this.setState({
+        currentVideo: videoStats.items[0]
+      });
+    }.bind(this));
   }
   
   searchVideos(options) {
     searchYouTube(options, function(data) {
+      searchYouTubeStats({
+        key: window.YOUTUBE_API_KEY,
+        id: data.items[0].id.videoId
+      }, function(videoStats) {
+        this.setState({
+          currentVideo: videoStats.items[0]
+        });
+      }.bind(this));
       this.setState({
-        videoList: data.items,
-        currentVideo: data.items[0]
+        videoList: data.items
       });
     }.bind(this));
   }
+
   render() {
     return (
       <div>

@@ -20,4 +20,27 @@ var searchYouTube = (options, callback) => {
   });
 };
 
+var searchYouTubeStats = (options, callback) => {
+  // TODO
+  $.ajax({
+    url: 'https://www.googleapis.com/youtube/v3/videos', 
+    type: 'GET',
+    data: {
+      id: options.id,
+      key: options.key,
+      part: 'snippet, statistics',
+      type: 'video',
+      videoEmbeddable: 'true',
+    },
+    success: function(data) {
+      console.log('successful search!');
+      callback(data);
+    },
+    error: function (error) {
+      console.log('error' + error);
+    },
+  });
+};
+
 window.searchYouTube = searchYouTube;
+window.searchYouTubeStats = searchYouTubeStats;
