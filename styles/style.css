@@ -49,6 +49,38 @@ body {
   margin-top: 10px;
 }
 
+.video-detail-bar {
+  padding: 8px;
+}
+
+#views {
+  color: grey;
+}
+
+#dislikes {
+  margin-left: 10px;
+  float: right;
+  color: red;
+}
+
+#likes {
+  float: right;
+  color: green;
+}
+
+#channel-title {
+  font-weight: bold;
+}
+
+#description-box {
+  padding-top: 20px;
+}
+
+#date-published {
+  font-size: smaller;
+  color: grey;
+}
+
 .video-list {
   background: #fff;
   padding: 8px;
